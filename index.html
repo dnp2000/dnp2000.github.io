@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/png" href="clock.png"/>
+  <title>Калькулятор времени</title>
+</head>
+<body>
+  <style>
+    .cool {
+      padding: 15px;
+      border: 1px solid #a0e991;
+      border-radius: 4px;
+      color: #000000;
+      background-color: #c4f5b1;
+      font-size: xx-large;
+      font-weight: bolder;
+      width: 100px;
+      text-align: center;
+    }
+
+    .mid {
+      padding: 15px;
+      border: 1px solid #f9fc64;
+      border-radius: 4px;
+      color: #000000;
+      background-color: #feffb6;
+      font-size: xx-large;
+      font-weight: bolder;
+      width: 100px;
+      text-align: center;
+    }
+
+    .few {
+      padding: 15px;
+      border: 1px solid #2fbcdf;
+      border-radius: 4px;
+      color: #000000;
+      background-color: #aaddf1;
+      font-size: xx-large;
+      font-weight: bolder;
+      width: 100px;
+      text-align: center;
+    }
+  </style>
+
+  <form name="form1" action="">
+    <select id="sel1" size="1"></select>
+    <select id="sel2" size="1"></select>
+    <select id="sel3" size="1"></select>
+    <select id="sel4" size="1"></select>
+    <script>
+      for (i = 0; i < 24; i++) {
+        let s1 = String(i);
+        if (s1.length < 2) { s1 = "0" + s1 }
+        let newOption1 = new Option(s1, s1);
+        let newOption2 = new Option(s1, s1);
+        sel1.append(newOption1);
+        sel3.append(newOption2);
+        // newOption1.selected = true;
+      }
+
+      for (i = 0; i < 60; i++) {
+        let s1 = String(i);
+        if (s1.length < 2) { s1 = "0" + s1 }
+        let newOption1 = new Option(s1, s1);
+        let newOption2 = new Option(s1, s1);
+        sel2.append(newOption1);
+        sel4.append(newOption2);
+      }
+      sel1.selectedIndex = 9;
+      sel2.selectedIndex = 0;
+      sel3.selectedIndex = 17;
+      sel4.selectedIndex = 0;
+    </script>
+    <input type="button" value="Вычислить" name="but1" onclick="Period()">
+  </form>
+  <script>
+    let div = document.createElement('div');
+    function MyAlert(any_text, view) {
+      switch (view) {
+        case 2:
+          {
+            div.className = "cool";
+            break;
+          }
+        case 1:
+          {
+            div.className = "mid";
+            break;
+          }
+        default: {
+          div.className = "few";
+        }
+      }
+      div.innerHTML = any_text;
+      document.body.append(div);
+    }
+
+    function Period() {
+      div.remove();
+      mas = new Array(4);
+      let selectedOption1 = sel1.options[sel1.selectedIndex];
+      mas[0] = Number(selectedOption1.value);
+      let selectedOption2 = sel2.options[sel2.selectedIndex];
+      mas[1] = Number(selectedOption2.value);
+      let selectedOption3 = sel3.options[sel3.selectedIndex];
+      mas[2] = Number(selectedOption3.value);
+      let selectedOption4 = sel4.options[sel4.selectedIndex];
+      mas[3] = Number(selectedOption4.value);
+
+      let beg = mas[0] * 60 + mas[1];
+      let end = mas[2] * 60 + mas[3];
+      if (beg > end) {
+        end += (24 * 60);
+      }
+      let def = (end - beg) / 60;
+      let str = Math.floor(def * 100) / 100;
+      // alert(str);
+      if (def > 8) {
+        MyAlert(str, 2);
+      }
+      else {
+        if (def >= 6.4) {
+          MyAlert(str, 1);
+        }
+        else MyAlert(str, 0);
+      }
+    }
+  </script>
+
+</body>
+
+</html>
